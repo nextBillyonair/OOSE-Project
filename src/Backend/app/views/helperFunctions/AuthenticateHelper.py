@@ -3,9 +3,9 @@ from app.models import User, UserSettings
 from facebook import GraphAPI, GraphAPIError
 from sqlalchemy.exc import IntegrityError
 
-FB_APP_ID = '569248390133225'
+FB_APP_ID = ''
 FB_APP_NAME = 'Footsie'
-FB_APP_SECRET = '5a63dd2867cb4e221d393374ef469b0e'
+FB_APP_SECRET = ''
 
 def fbAuth(userID, accessToken):
     if None in (userID, accessToken):
