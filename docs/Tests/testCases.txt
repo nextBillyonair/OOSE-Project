@@ -1,0 +1,1078 @@
+TEST CASES
+
+This file was created as a guide for tests that can be written.
+
+Some of the tests are redundant and are no longer necessary to make.
+
+Please see the tests folder for all written tests. 
+
+1.
+
+Condition(s):
+    user joins Footsie
+Expected:
+    Prompted with FB login
+
+2.
+
+Condition(s):
+    user logs in with FB
+Expected:
+    Footsie account created
+
+3.
+
+Condition(s):
+    user opens app after account creation
+Expected:
+    Delete all requests older than 24 hours
+
+4.
+
+Condition(s):
+    user opens discover view
+Expected:
+    Find all nearby (if any) users
+
+5.
+
+Condition(s):
+    user1 sends request to user2
+Expected:
+    user2 receives request
+
+6.
+
+Condition(s):
+    user1 sends empty request (no message) to user2
+Expected:
+    Request is not sent (message not present, empty string ok)
+
+7.
+
+Condition(s):
+    user1 sends user2 request
+    user1 blocks user2
+    user2 accepts
+Expected:
+    user1 receives no further messages, user2 present in user1 blocklist
+
+8.
+
+Condition(s):
+    user1 sends request to user2
+    user2 accepts
+Expected:
+    request only message in chat log for user1 and user2
+
+9.
+
+Condition(s):
+    user1 sends user2 request
+    user2 denies
+Expected:
+    no chats created, request declined
+
+10.
+
+Condition(s):
+    user1 sends user2 request
+    user2 blocks
+Expected:
+    no chats created, request declined, 
+    user1 present in user2 blocklist
+
+11.
+
+Condition(s):
+    user1 sends user2 request
+    user1 blocks user2
+    user2 denies
+Expected:
+    no chats created
+
+12.
+
+Condition(s):
+    user1 sends request to user2
+    user2 sends request to user1
+Expected:
+    request from user1 to user2 goes through 
+    other request dropped 
+    (Discuss as group)
+
+13.
+
+Condition(s):
+    user1 sends a message to user2
+Expected:
+    failure, no request accepted
+
+14.
+
+Condition(s):
+    user1 sends a request to user2
+    user2 does not respond for 24 hours
+Expected:
+    request expires
+
+15.
+
+Condition(s):
+    user1 sends request to non-existent user
+Expected:
+    failure, invalid userID
+
+16.
+
+Condition(s):
+    user1 sends message to non-existent user
+Expected:
+    failure, invalid userID
+
+17.
+
+Condition(s):
+    user1 blocks non-existent user
+Expected:
+    failure, invalid userID
+
+18.
+
+Condition(s):
+    user1 unblocks a non-existent user
+Expected:
+    failure, invalid userID
+
+19.
+
+Condition(s):
+    user1 accepts/declines a request from a non-existent user
+Expected:
+    failure, invalid userID
+
+20.
+
+Condition(s):
+    user1 sends message to a connected user2
+Expected:
+    getChat shows most recent message for both user1 and user2
+
+21.
+
+Condition(s):
+    user1 sends message to a connected user2 who has user1 blocked
+Expected:
+    getChats shows most recent message for user1 but not user2
+
+22.
+
+Condition(s):
+    user1 sends message to a blocked connected user2
+Expected:
+    getChats shows most recent message for user2 but not user1
+
+23.
+
+Condition(s):
+    user1 sends message to a connected user2 where both users have blocked each other
+    user2 sends a message to a user1 as well
+Expected:
+    getChats should show 0 for both
+
+24.
+
+Condition(s):
+    user1 sends a message to a chat that doesn't exist
+Expected:
+    message didn't go through, 
+    chatID doesn't get created
+
+25.
+
+Condition(s):
+    user1 sends user2 a message using a chatID that the two aren't a part of
+Expected:
+    message doesn't go through
+
+26.
+
+Condition(s):
+    user1 sends request to user2
+    user2 declines
+    user1 sends another request before 24 hours has passed
+Expected:
+    failure, 24 hrs has not elapsed
+
+27.
+
+Condition(s):
+    user1 sends request to user2
+    user1 sends another request to user2
+Expected:
+    failure, 24 hrs has not elapsed
+
+28.
+
+Condition(s):
+    user1 sends request to user2
+    user2 accepts
+    user1 sends request to user2
+Expected:
+    failure, already connected
+
+29.
+
+Condition(s):
+    user1 sends request to user2
+    user2 accepts
+    user2 sends request to user1
+Expected:
+    failure, already connected
+
+30.
+
+Condition(s):
+    user1 sends a request to user2
+    user2 declines
+    user2 sends a request to user1
+Expected:
+    user1 receives request
+
+31.
+
+Condition(s):
+    user1 sends a request to user2
+    user2 declines
+    user2 sends a request to user1
+    user1 declines
+    user1 sends request to user2 before 24 hrs has passed
+Expected:
+    failure, 24 hrs has not elapsed
+
+32.
+
+Condition(s):
+    user1 sends request to user2
+    user2 ignores request for 24 hrs
+    user2 accepts request
+Expected:
+    failure, request expired
+
+33.
+
+Condition(s):
+    user1 sends request to user2
+    user2 ignores request for 24 hrs
+    user2 denies request
+Expected:
+    failure, request expired
+
+34.
+
+Condition(s):
+    user1 sends request to user2
+    user2 ignores request for 24 hrs
+    user2 blocks user1
+Expected:
+    user1 getRelations(user2) returns not connected
+    user2 getRelations(user1) returns blocked
+
+35.
+
+Condition(s):
+    user1 sends request to user2
+    user2 ignores request for 24 hrs
+    user1 sends another request to user2
+Expected:
+    user2 receives request
+
+36.
+
+Condition(s):
+    user1 is connected with user2 with several messages sent
+Expected:
+    getChat has all previous messages
+
+37.
+
+Condition(s):
+    user1 views messages when no conversations exist
+Expected:
+    getChats returns nothing
+
+38.
+
+Condition(s):
+    user1 views messages when conversations exist
+Expected:
+    getChats returns all current conversations
+
+39.
+
+Condition(s):
+    user1 views messages when conversation with user2 exists
+Expected:
+    user1 getChats returns user2 messages and vice versa
+
+40.
+
+Condition(s):
+    user1 sends a request to user2
+    user2 accepts
+Expected:
+    both getRelation returns connected
+
+41.
+
+Condition(s):
+    user1 and user2 are unrelated to each
+Expected:
+    both getRelation returns no connection
+
+42.
+
+Condition(s):
+    user1 sends a request to user2
+    user2 denies
+Expected:
+    both getRelations returns no connection
+
+43.
+
+Condition(s):
+    user1 sends request to user2
+    user2 blocks user1
+Expected:
+    user1 getRelation(user2) returns nothing
+    user2 getRelation(user1) returns blocked
+
+44.
+
+Condition(s):
+    user1 sends request to user2
+Expected:
+    both getRelations return nothing
+
+45.
+
+Condition(s):
+    user1 blocks user2
+Expected:
+    user1 getRelation(user2) returns blocked
+    user2 getRelation(user2) returns nothing
+
+46.
+
+Condition(s):
+    user1 sends request to user2
+    user2 accepts
+    user2 blocks user1
+Expected:
+    user1 getRelation(user2) returns connected
+    user2 getRelation(user1) returns blocked
+
+47.
+
+Condition(s):
+    user1 sends request to user2
+    user2 accepts
+    user1 blocks user2
+Expected:
+    user1 getRelation(user2) returns blocked
+    user2 getRelation(user1) returns connected
+
+48.
+
+Condition(s):
+    user1 blocks user2
+    user2 blocks user1
+Expected:
+    user1 getRelations(user2) returns blocked
+    user2 getRelation(user1) returns blocked
+
+49.
+
+Condition(s):
+    user1 sends a request to user2
+    user2 accepts
+    user1 blocks user2
+    user2 blocks user1
+Expected:
+    user1 getRelations(user2) returns blocked
+    user2 getRelation(user1) returns blocked
+
+50.
+
+Condition(s):
+    user1 sends a request to user2
+    user2 denies
+    user1 blocks user2
+    user2 blocks user1
+Expected:
+    user1 getRelations(user2) returns blocked
+    user2 getRelation(user1) returns blocked
+
+51.
+
+Condition(s):
+    user1 sends a request to user2
+    user2 accepts
+    user1 blocks user2
+    user2 blocks user1
+    user1 unblocks user2
+Expected:
+    user1 getRelations(user2) returns connected
+    user2 getRelation(user1) returns blocked
+
+52.
+
+Condition(s):
+    user1 sends a request to user2
+    user2 accepts
+    user1 blocks user2
+    user2 blocks user1
+    user1 unblocks user2
+    user2 unblocks user1
+Expected:
+    user1 getRelations(user2) returns connected
+    user2 getRelation(user1) returns connected
+
+53.
+
+Condition(s):
+    user1 sends a request to user2
+    user2 denies
+    user1 blocks user2
+    user2 blocks user1
+    user1 unblocks user2
+Expected:
+    user1 getRelations(user2) returns not connected
+    user2 getRelation(user1) returns blocked
+
+54.
+
+Condition(s):
+    user1 sends a request to user2
+    user2 denies
+    user1 blocks user2
+    user2 blocks user1
+    user1 unblocks user2
+    user2 unblocks user1
+Expected:
+    user1 getRelations(user2) returns not connected
+    user2 getRelation(user1) returns not connected
+
+55.
+
+Condition(s):
+    user1 blocks user2
+    user2 blocks user1
+    user1 unblocks user2
+    user2 unblocks user1
+Expected:
+    user1 getRelations(user2) returns not connected
+    user2 getRelation(user1) returns not connected
+
+56.
+
+Condition(s):
+    user1 views blocklist with no users blocked
+Expected:
+    getBlockedUsers returns empty
+
+57.
+
+Condition(s):
+    user1 views blocklist with users blocked
+Expected:
+    getBlockedUsers returns all currently blocked users
+
+58.
+
+Condition(s):
+    user1 logs in
+    user1 tries logging in again
+Expected:
+    failure, already logged in
+
+59.
+
+Condition(s):
+    user1 deactivates account
+Expected:
+    all existing connections purged
+
+60.
+
+Condition(s):
+    user1 unblocks a user2 that is not blocked
+Expected:
+    failure, user2 is not blocked
+
+61.
+
+Condition(s):
+    user1 blocks an already blocked user2
+Expected:
+    failure, user2 already blocked
+
+62.
+
+Condition(s):
+    user1 sends a message to a connected user2
+    user2 blocks user1
+Expected:
+    user1 getChat and user2 getChat return the same
+
+63.
+
+Condition(s):
+    user1 sends a non-string message to a non-connected user2
+Expected:
+    failure
+
+64.
+
+Condition(s):
+    user1 sends a non-string message to a connected user2
+Expected:
+    failure
+
+65.
+
+Condition(s):
+    user1 sends a non-string message to a blocked user2
+Expected:
+    failure
+
+66.
+
+Condition(s):
+    user2 blocks a non-connected user1
+    user1 sends a non-string message to a user2
+Expected:
+    failure
+
+67.
+
+Condition(s):
+    user2 blocks a connected user1
+    user1 sends a non-string message to a user2
+Expected:
+    failure
+
+68.
+
+Condition(s):
+    user1 sends a non-string request to a non-connected user2
+Expected:
+    failure
+
+69.
+
+Condition(s):
+    user1 sends a non-string request to a connected user2
+Expected:
+    failure
+
+70.
+
+Condition(s):
+    user1 sends a non-string request to a blocked user2
+Expected:
+    failure
+
+71.
+
+Condition(s):
+    user2 blocks a non-connected user1
+    user1 sends a non-string request to a user2
+Expected:
+    failure
+
+72.
+
+Condition(s):
+    user2 blocks a connected user1
+    user1 sends a non-string request to a user2
+Expected:
+    failure
+
+73.
+
+Condition(s):
+    chatID is not a long
+Expected:
+    failure
+
+74.
+
+Condition(s):
+    userID is not a long
+Expected:
+    failure
+
+75.
+
+Condition(s):
+    relations is not an enum
+Expected:
+    failure
+
+76.
+
+Condition(s):
+    Chat Name is not a string
+Expected:
+    failure
+
+77.
+
+Condition(s):
+    user1 sends a request to user2
+    user2 accepts
+Expected:
+    chatName is different for user1 and user2
+    chatName is same before and after accepting
+
+78.
+
+Condition(s):
+    user1 sends a request to user2
+Expected:
+    chatName does not exist yet
+
+79.
+
+Condition(s):
+    user1 sends a request to user2
+    user2 declines
+Expected:
+    chatName does not exist
+
+80.
+
+Condition(s):
+    user1 blocks a connected user2
+Expected:
+    chatName is different for user1 and user2
+    chatName is same as before block
+
+81.
+
+Condition(s):
+    user1 blocks a connected user2
+    user2 blocks a connected user1
+Expected:
+    chatName is different for user1 and user2
+    chatName is same before block
+
+82.
+
+Condition(s):
+    user1 blocks a connected user2
+    user1 unblocks a connected user2
+Expected:
+    chatName is same throughout
+    end relations should be connected
+
+83.
+
+Condition(s):
+    user1 attempts to change chat name to a non-string
+Expected:
+    failure
+
+84.
+
+Condition(s):
+    user2 blocks a connected user1
+    user1 attempts to change chat name to a non-string
+Expected:
+    failure
+
+85.
+
+Condition(s):
+    user1 blocks a connected user2
+    user1 attempts to change chat name to a non-string
+Expected:
+    failure
+
+86.
+
+Condition(s):
+    user1 blocks a connected user2
+    user2 blocks a connected user1
+    user1 attempts to change chat name with user2 where no
+Expected:
+    failure
+
+87.
+
+Condition(s):
+    user1 and user2 are connected
+    user1 changes name of the chat
+Expected:
+    user1's chatName is now the changed name
+
+88.
+
+Condition(s):
+    user1 and user2 are not connected
+    user1 changes the name of the chat
+Expected:
+    failure
+
+89.
+
+Condition(s):
+    user1 and user2 are not connected
+    user1 sends a request
+    user1 changes name of the chat
+Expected:
+    failure
+
+90.
+
+Condition(s):
+    user1 and user2 are not connected
+    user1 sends a request
+    user2 denies
+    user1 changes name of the chat
+Expected:
+    failure
+
+91.
+
+Condition(s):
+    user1 and user2 are connected
+    user1 changes name of the chat
+    user2 changes name of the chat to something else
+Expected:
+    chatName is different for user1 and user2 throughout
+    user1's chatName is now newName1
+    user2's chatName is now newName2
+
+92.
+
+Condition(s):
+    user1 and user2 are connected
+    user1 changes name of the chat
+    user2 changes name of the chat to the same name
+Expected:
+    chatName is different for user1 and user2 initially
+    chatName is the same for user1 and user2 after change
+
+93.
+
+Condition(s):
+    user1 and user2 are connected
+    user1 and user3 are connected
+Expected:
+    All of the chat names are different
+
+94.
+
+Condition(s):
+    user1 and user2 are connected
+    user1 and user3 are connected
+    user1 changes chat name with user2
+Expected:
+    All of the chat names are different throughout
+
+95.
+
+Condition(s):
+    user1 and user2 are connected
+    user1 and user3 are connected
+    user1 changes chat name with user2
+    user1 changes chat name with user3 to something else
+Expected:
+    All of the chat names are different throughout
+
+96.
+
+Condition(s):
+    user1 and user2 are connected
+    user1 and user3 are connected
+    user1 changes chat name with user2
+    user1 changes chat name with user3 to the same on
+Expected:
+    All of the chat names are different initially
+    After changes, user1's chat with user2 and user1's chat with user3 are named the same
+
+97.
+
+Condition(s):
+    user1 and user2 are connected
+    user2 blocks user1
+    user1 changes the name of the chat
+Expected:
+    user1 is successful in changing the name
+
+98.
+
+Condition(s):
+    user1 and user2 are connected
+    user1 blocks user2
+    user1 changes the name of the chat
+Expected:
+    user1 is successful in changing the name of the chat
+
+99.
+
+Condition(s):
+    user1 and user2 are connected
+    user1 blocks user2
+    user2 blocks user1
+    user1 changes the name of the chat
+Expected:
+    user1 is successful in changing the name of the chat
+
+100.
+
+Condition(s):
+    user1 and user2 are connected
+    user2 blocks user1
+    user2 unblocks user1
+    user1 changes the name of the chat
+Expected:
+    user1 is successful in changing the name of the chat
+
+101.
+
+Condition(s):
+    user1 and user2 are connected
+    user1 blocks user2
+    user1 unblocks user2
+    user1 changes the name of the chat
+Expected:
+    user1 is successful in changing the name of the chat
+
+102.
+
+Condition(s):
+    user1 and user2 are connected
+    user2 blocks user1
+    user1 changes the name of the chat
+    user2 unblocks user1
+Expected:
+    the changed name stays consistent through the unblocking
+
+103.
+
+Condition(s):
+    user1 and user2 are connected
+    user1 changes the name of the chat
+    user2 blocks user1
+Expected:
+    the changed name stays consistent through the blocking
+
+104.
+
+Condition(s):
+    user1 and user2 are connected
+    user1 changes the name of the chat
+    user1 blocks user2
+Expected:
+    the changed name stays consistent through the blocking
+
+105.
+
+Condition(s):
+    user1 and user2 are connected
+    user1 blocks user2
+    user1 changes the name of the chat
+    user1 unblocks user2
+Expected:
+    the changed name stays consistent through the unblocking
+
+106.
+
+Condition(s):
+    user1 and user2 are connected
+    user1 blocks user2
+    user1 changes the name of the chat
+    user1 unblocks user2
+Expected:
+    the changed name stays consistent through the unblocking
+
+107.
+
+Condition(s):
+    user1 and user2 are connected
+    user1 changes the name of the chat
+    user1 changes the name of the chat again
+Expected:
+    the name changes successfully both times
+
+108.
+
+Condition(s):
+    user1 and user2 are connected
+    user1 changes the name of the chat
+    user1 changes the name of the chat to the same
+Expected:
+    the name changes stays the same through the change
+
+109.
+
+Condition(s):
+    user1 and user2 are connected
+    user1 changes the name of the chat
+    user1 blocks user2
+    user1 unblocks user2
+Expected:
+    the name stays consistent through the blocking/unblocking
+
+110.
+
+Condition(s):
+    user1 and user2 are connected
+    user1 changes the name of the chat
+    user2 blocks user1
+    user2 unblocks user1
+Expected:
+    the name stays consistent through the blocking/unblocking
+
+111.
+
+Condition(s):
+    user1 and user2 are connected
+    user1 changes the name of the chat
+    user2 blocks user1
+    user1 blocks user2
+    user2 unblocks user1
+    user1 unblocks user2
+Expected:
+    the name stays consistent through the blocking/unblocking
+
+112.
+
+Condition(s):
+    user1 changes the name of a chat with a nonexistant user
+Expected:
+    failure
+
+113.
+
+Condition(s):
+    messageID is not a long
+Expected:
+    failure
+
+114.
+
+Condition(s):
+    timestamp is not a datetime
+Expected:
+    failure
+
+115.
+
+Condition(s):
+    timestamp is not a datetime
+Expected:
+    failure
+
+116.
+
+Condition(s):
+    message is not a string
+Expected:
+    failure
+
+117.
+
+Condition(s):
+    fromUserID is not a long
+Expected:
+    failure
+
+118.
+
+Condition(s):
+    toUserID is not a long
+Expected:
+    failure
+
+119.
+
+Condition(s):
+    completed is not a boolean
+Expected:
+    failure
+
+120.
+
+Condition(s):
+    requestID is not a long
+Expected:
+    failure
+
+121.
+
+Condition(s):
+    accessToken is not a string
+Expected:
+    failure
+
+122.
+
+Condition(s):
+    user1 sends two messages to user2
+Expected:
+    The timestamp of the second message is more recent
+
+123.
+
+Condition(s):
+    user1 sends a request to user2
+    user1 sends a request to user3
+Expected:
+    The timestamp of the second message is more recent
+
+124.
+
+Condition(s):
+    user1 sends a message user2
+    user1 sends a message to user3
+Expected:
+    The timestamp of the chat with user3 is more recent
+
+125.
+
+Condition(s):
+    user1 sends a message to user2
+Expected:
+    The timestamps should be the same for both users
+
+126.
+
+Condition(s):
+    user1 sends a request to themself
+Expected:
+    failure
+
+127.
+
+Condition(s):
+    user1 sends a message to themself
+Expected:
+    failure
+
+128.
+
+Condition(s):
+    user1 blocks themself
+Expected:
+    failure
+
+129.
+
+Condition(s):
+    user1 unblocks themself
+Expected:
+    failure
